@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agen HS — Es Kristal & Es Teh, 4 Cabang</title>
+<meta name="description" content="Agen HS: 2 cabang es kristal higienis dan 2 cabang es teh kekinian. Pilih cabang, lihat produk, pesan lewat WhatsApp.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          orange:  '#FF6A00',
+          orangeD: '#E85A00',
+          orangeL: '#FFF1E6',
+          ink:     '#242424',
+          slate2:  '#6B6B6B',
+          line:    '#F0F0F0',
+        },
+        fontFamily: {
+          display: ['Poppins', 'sans-serif'],
+          body: ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: #F5F5F5; color: #242424; overflow-x: hidden; }
+  h1,h2,h3,.font-display { font-family: 'Poppins', sans-serif; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #F5F5F5; }
+  ::-webkit-scrollbar-thumb { background: #FF6A00; border-radius: 8px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid #FF6A00; outline-offset: 2px; }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.show { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; } }
+
+  /* ===== FOTO: full menutupi seluruh kotak ===== */
+  .photo-cover {
+    position: relative;
+    overflow: hidden;
+    background: #FFF1E6;
+  }
+  .photo-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        /* gambar mengisi penuh, tidak ada celah */
+    object-position: center;
+    display: block;
+  }
+  .photo-cover .photo-label {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 4px 8px; font-size: 10px; font-weight: 600; color: #fff;
+    background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
+  }
+  .card-hover { transition: transform .2s ease, box-shadow .2s ease; }
+  .card-hover:hover { transform: translateY(-3px); box-shadow: 0 14px 28px -12px rgba(255,106,0,.28); }
+  .branch-tab.active { background: #FF6A00; color: #fff; box-shadow: 0 8px 18px -8px rgba(255,106,0,.5); }
+  .cat-chip.active { background: #242424; color: #fff; }
+  #sidebar { transition: transform .3s cubic-bezier(.22,.85,.32,1); transform: translateX(100%); will-change: transform; }
+  #sidebar.open { transform: translateX(0); }
+  #sidebarOverlay { transition: opacity .25s ease; }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- ============ TOP HEADER ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-orange md:bg-white shadow-sm" id="siteHeader">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between gap-3">
+    <a href="#home" class="flex items-center gap-2 shrink-0">
+      <span class="w-10 h-10 rounded-full bg-white overflow-hidden flex items-center justify-center shrink-0">
+        <img src="/image/logo.jpeg" alt="Logo Agen HS" class="w-full h-full object-contain" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<span class=\'font-display font-bold text-base text-orange md:text-white\'>HS</span>')">
+      </span>
+      <span class="font-display font-bold text-white md:text-ink text-base leading-none hidden sm:block">HS GROUP</span>
+    </a>
+
+    <a href="#produk" class="md:hidden flex-1 flex items-center gap-2 bg-white/95 rounded-full px-3.5 py-2 text-slate2 text-sm">
+      <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+      <span class="truncate">Cari es kristal, es teh...</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7 text-[15px] font-medium text-ink">
+      <a href="#home" class="hover:text-orange transition-colors">Home</a>
+      <a href="#cabang" class="hover:text-orange transition-colors">Cabang</a>
+      <a href="#produk" class="hover:text-orange transition-colors">Produk</a>
+      <a href="#galeri" class="hover:text-orange transition-colors">Galeri</a>
+      <a href="#review" class="hover:text-orange transition-colors">Komentar</a>
+    </nav>
+    <a href="https://wa.me/62895358240856" target="_blank" rel="noopener"
+       class="hidden md:inline-flex items-center gap-2 bg-orange hover:bg-orangeD text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors shrink-0">
+      Hubungi Kami
+    </a>
+    <button id="menuBtn" aria-label="Buka menu" aria-expanded="false" class="md:hidden p-1.5 text-white shrink-0">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ SIDEBAR (mobile) ============ -->
+<div id="sidebarOverlay" class="md:hidden fixed inset-0 bg-black/50 z-[60] hidden opacity-0"></div>
+<aside id="sidebar" class="md:hidden fixed top-0 right-0 h-full w-[78%] max-w-[300px] bg-white z-[70] shadow-2xl flex flex-col">
+  <div class="flex items-center justify-between px-5 h-14 border-b border-line shrink-0">
+    <span class="font-display font-bold text-ink">Menu</span>
+    <button id="sidebarClose" aria-label="Tutup menu" class="p-1.5 text-ink">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1 text-ink font-medium">
+    <a href="#home" class="sidebar-link block px-4 py-3.5 rounded-xl hover:bg-orangeL">Home</a>
+    <a href="#cabang" class="sidebar-link block px-4 py-3.5 rounded-xl hover:bg-orangeL">Cabang</a>
+    <a href="#produk" class="sidebar-link block px-4 py-3.5 rounded-xl hover:bg-orangeL">Produk</a>
+    <a href="#galeri" class="sidebar-link block px-4 py-3.5 rounded-xl hover:bg-orangeL">Galeri</a>
+    <a href="#review" class="sidebar-link block px-4 py-3.5 rounded-xl hover:bg-orangeL">Komentar</a>
+    <a href="#footer-info" class="sidebar-link block px-4 py-3.5 rounded-xl hover:bg-orangeL">Tentang Kami</a>
+  </nav>
+  <div class="p-4 border-t border-line shrink-0 safe-bottom">
+    <a href="https://wa.me/62895358240856" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-orange hover:bg-orangeD text-white font-semibold py-3.5 rounded-full transition-colors">Hubungi via WhatsApp</a>
+  </div>
+</aside>
+
+<!-- ============ HOME / HERO ============ -->
+<section id="home" class="relative pt-14 md:pt-16 overflow-hidden">
+  <div class="absolute inset-0">
+    <img src="https://images.pexels.com/photos/12987267/pexels-photo-12987267.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" class="w-full h-full object-cover" loading="eager">
+    <div class="absolute inset-0 bg-white/55 backdrop-blur-md"></div>
+  </div>
+  <div class="relative max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-20">
+    <div class="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+      <div class="max-w-xl mx-auto md:mx-0 text-center md:text-left order-2 md:order-1">
+        <span class="inline-block bg-orange text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-4">4 Cabang Siap Antar Setiap Hari</span>
+        <h1 class="font-display text-2xl sm:text-4xl leading-tight font-bold text-ink mb-3">
+          Es Kristal &amp; Es Teh,<br>langsung dari agen.
+        </h1>
+        <p class="text-slate2 text-sm sm:text-lg mb-6">
+          2 cabang es kristal dan 2 cabang es teh kekinian. Pilih cabang terdekat, lihat produk, pesan lewat WhatsApp.
+        </p>
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+          <a href="#cabang" class="inline-flex items-center gap-2 bg-orange hover:bg-orangeD text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors">Pilih Cabang</a>
+          <a href="https://wa.me/62895358240856" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-white border border-orange/30 text-orangeD font-semibold px-6 py-3 rounded-full text-sm">Tanya Dulu</a>
+        </div>
+      </div>
+      <div class="order-1 md:order-2 flex justify-center md:justify-end">
+        <div class="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white photo-cover">
+          <img src="image/download (3).jpg"alt="Minuman kekinian Agen HS" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg viewBox="0 0 1440 60" class="block w-full h-8 md:h-12 -mb-px" preserveAspectRatio="none"><path fill="#F5F5F5" d="M0,32L80,37.3C160,43,320,53,480,48C640,43,800,21,960,16C1120,11,1280,21,1360,26.7L1440,32L1440,60L0,60Z"></path></svg>
+</section>
+
+<!-- Quick stat strip -->
+<section class="max-w-6xl mx-auto px-4 md:px-6 -mt-5 md:-mt-8 relative z-10">
+  <div class="bg-white rounded-2xl shadow-md grid grid-cols-4 divide-x divide-line text-center py-4">
+    <div><div class="font-display font-bold text-orange text-lg sm:text-2xl">4</div><div class="text-[10px] sm:text-xs text-slate2 mt-0.5">Cabang</div></div>
+    <div><div class="font-display font-bold text-orange text-lg sm:text-2xl">2</div><div class="text-[10px] sm:text-xs text-slate2 mt-0.5">Es Kristal</div></div>
+    <div><div class="font-display font-bold text-orange text-lg sm:text-2xl">2</div><div class="text-[10px] sm:text-xs text-slate2 mt-0.5">Es Teh</div></div>
+    <div><div class="font-display font-bold text-orange text-lg sm:text-2xl">2015</div><div class="text-[10px] sm:text-xs text-slate2 mt-0.5">Sejak</div></div>
+  </div>
+</section>
+
+<!-- ============ CABANG ============ -->
+<section id="cabang" class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16 scroll-mt-14">
+  <div class="mb-6 reveal" data-reveal>
+    <span class="text-orange text-xs font-bold tracking-wide uppercase">Pilih Dulu</span>
+    <h2 class="font-display text-xl sm:text-3xl font-bold mt-1 text-ink">Cabang Kami</h2>
+    <p class="text-slate2 text-sm mt-1">Ketuk salah satu cabang untuk melihat produk dan cara pesannya.</p>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 reveal" data-reveal>
+    <button data-branch="es1" class="branch-tab active text-left bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+      <div class="aspect-[4/3] photo-cover">
+        <img src="/image/cabang2.jpeg" alt="Es kristal Cabang Pusat" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.pexels.com/photos/434259/pexels-photo-434259.jpeg?auto=compress&cs=tinysrgb&w=600'">
+      </div>
+      <div class="p-3 sm:p-5">
+        <div class="text-[9px] sm:text-[11px] font-bold tracking-wide uppercase opacity-70 mb-0.5 sm:mb-1">Es Kristal</div>
+        <h3 class="font-display font-semibold text-sm sm:text-lg leading-tight">Cabang Pusat</h3>
+        <p class="text-[11px] sm:text-sm opacity-70 mt-0.5 sm:mt-1 hidden sm:block">Ngijo, Tasikmadu</p>
+      </div>
+    </button>
+    <button data-branch="es2" class="branch-tab text-left bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+      <div class="aspect-[4/3] photo-cover">
+        <img src="/image/cabang2.jpeg" alt="Es kristal Cabang 2" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.pexels.com/photos/10526895/pexels-photo-10526895.jpeg?auto=compress&cs=tinysrgb&w=600'">
+      </div>
+      <div class="p-3 sm:p-5">
+        <div class="text-[9px] sm:text-[11px] font-bold tracking-wide uppercase opacity-70 mb-0.5 sm:mb-1">Es Kristal</div>
+        <h3 class="font-display font-semibold text-sm sm:text-lg leading-tight">Cabang 2 — Zoletho</h3>
+        <p class="text-[11px] sm:text-sm opacity-70 mt-0.5 sm:mt-1 hidden sm:block">Karangmojo, Tasikmadu</p>
+      </div>
+    </button>
+    <button data-branch="teh1" class="branch-tab text-left bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+      <div class="aspect-[4/3] photo-cover">
+        <img src="/image/cabang1.jpeg" alt="Racik Cah Solo" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.pexels.com/photos/8619612/pexels-photo-8619612.jpeg?auto=compress&cs=tinysrgb&w=600'">
+      </div>
+      <div class="p-3 sm:p-5">
+        <div class="text-[9px] sm:text-[11px] font-bold tracking-wide uppercase opacity-70 mb-0.5 sm:mb-1">Es Teh</div>
+        <h3 class="font-display font-semibold text-sm sm:text-lg leading-tight">Racik Cah Solo</h3>
+        <p class="text-[11px] sm:text-sm opacity-70 mt-0.5 sm:mt-1 hidden sm:block">Tasikmadu, Karanganyar</p>
+      </div>
+    </button>
+    <button data-branch="teh2" class="branch-tab text-left bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+      <div class="aspect-[4/3] photo-cover">
+        <img src="/image/BC.jpeg" alt="Es teh Cabang 2" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.pexels.com/photos/1484678/pexels-photo-1484678.jpeg?auto=compress&cs=tinysrgb&w=600'">
+      </div>
+      <div class="p-3 sm:p-5">
+        <div class="text-[9px] sm:text-[11px] font-bold tracking-wide uppercase opacity-70 mb-0.5 sm:mb-1">Es Teh</div>
+        <h3 class="font-display font-semibold text-sm sm:text-lg leading-tight">Es Teh BC</h3>
+        <p class="text-[11px] sm:text-sm opacity-70 mt-0.5 sm:mt-1 hidden sm:block">Jaten, Karanganyar</p>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- ============ PRODUK ============ -->
+<section id="produk" class="bg-white py-10 md:py-16 scroll-mt-14">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+
+    <div class="mb-5 reveal" data-reveal>
+      <span class="text-orange text-xs font-bold tracking-wide uppercase">Produk</span>
+      <h2 class="font-display text-xl sm:text-3xl font-bold mt-1 text-ink" id="produkHeading">Produk — Cabang Pusat</h2>
+    </div>
+
+    <div class="flex items-center gap-3 bg-orangeL rounded-2xl p-3 sm:p-4 mb-5">
+      <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 bg-orange/10 flex items-center justify-center text-orange">
+        <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+      </div>
+      <div class="min-w-0 flex-1">
+        <h3 id="branchName" class="font-display font-semibold text-sm sm:text-base text-ink truncate">Cabang Pusat</h3>
+        <p id="branchAddress" class="text-slate2 text-xs sm:text-sm truncate">RT.02/RW.02, Ngijo Tengah, Tasikmadu</p>
+        <p id="branchHours" class="text-slate2 text-[11px] sm:text-xs mt-0.5">Buka 06.00–20.00 WIB</p>
+      </div>
+      <div class="flex flex-col gap-1.5 shrink-0">
+        <a id="branchRoute" href="#" target="_blank" rel="noopener" class="text-[11px] sm:text-xs font-semibold text-center bg-white border border-orange/30 text-orange px-3 py-1.5 rounded-full">Rute</a>
+        <a id="branchContact" href="#" target="_blank" rel="noopener" class="text-[11px] sm:text-xs font-semibold text-center bg-orange text-white px-3 py-1.5 rounded-full">Chat WA</a>
+      </div>
+    </div>
+
+    <div id="catChipsWrap" class="hidden mb-4 overflow-x-auto">
+      <div class="flex gap-2 w-max" id="catChips"></div>
+    </div>
+
+    <div id="menuGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4"></div>
+
+    <p class="text-slate2/50 text-[11px] mt-5">Harga contoh untuk ditampilkan — sesuaikan dengan daftar harga terbaru sebelum dipakai.</p>
+  </div>
+</section>
+
+<!-- ============ GALERI ============ -->
+<section id="galeri" class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16 scroll-mt-14">
+  <div class="mb-5 reveal" data-reveal>
+    <span class="text-orange text-xs font-bold tracking-wide uppercase">Galeri</span>
+    <h2 class="font-display text-xl sm:text-3xl font-bold mt-1 text-ink">Suasana &amp; Produk Kami</h2>
+    <p class="text-slate2 text-sm mt-1">Foto contoh di bawah ini — ganti dengan foto asli produk dan cabangmu saat sudah siap.</p>
+  </div>
+  <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-4 reveal" data-reveal id="galeriGrid"></div>
+</section>
+
+<!-- ============ REVIEW / KOMENTAR ============ -->
+<section id="review" class="bg-white py-10 md:py-16 scroll-mt-14">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+    <div class="mb-5 reveal" data-reveal>
+      <span class="text-orange text-xs font-bold tracking-wide uppercase">Komentar</span>
+      <h2 class="font-display text-xl sm:text-3xl font-bold mt-1 text-ink">Kata Pelanggan</h2>
+      <div class="flex items-center gap-2 mt-2">
+        <span class="text-amber-500 text-lg leading-none">★★★★★</span>
+        <span class="font-semibold text-ink text-sm">4.8/5</span>
+        <span class="text-slate2 text-xs">dari 120+ pesanan (contoh)</span>
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 reveal" data-reveal>
+      <div class="bg-orangeL rounded-2xl p-4">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="w-9 h-9 rounded-full bg-orange text-white flex items-center justify-center font-display font-semibold text-xs shrink-0">BS</div>
+          <div class="min-w-0"><div class="font-semibold text-ink text-sm truncate">Bu Siti</div><div class="text-amber-500 text-xs">★★★★★</div></div>
+        </div>
+        <p class="text-slate2 text-xs sm:text-sm">Es kristal Cabang Pusat selalu bersih, datang pagi sebelum warung buka.</p>
+      </div>
+      <div class="bg-orangeL rounded-2xl p-4">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="w-9 h-9 rounded-full bg-orange text-white flex items-center justify-center font-display font-semibold text-xs shrink-0">RH</div>
+          <div class="min-w-0"><div class="font-semibold text-ink text-sm truncate">Pak Rahmat</div><div class="text-amber-500 text-xs">★★★★★</div></div>
+        </div>
+        <p class="text-slate2 text-xs sm:text-sm">Pesan es balok ke Cabang 2 untuk hajatan, tetap diantar tepat waktu.</p>
+      </div>
+      <div class="bg-orangeL rounded-2xl p-4">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="w-9 h-9 rounded-full bg-orange text-white flex items-center justify-center font-display font-semibold text-xs shrink-0">DA</div>
+          <div class="min-w-0"><div class="font-semibold text-ink text-sm truncate">Dinda A.</div><div class="text-amber-500 text-xs">★★★★☆</div></div>
+        </div>
+        <p class="text-slate2 text-xs sm:text-sm">Matcha redvelvet latte Racik Cah Solo enak, harganya juga ramah kantong.</p>
+      </div>
+      <div class="bg-orangeL rounded-2xl p-4">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="w-9 h-9 rounded-full bg-orange text-white flex items-center justify-center font-display font-semibold text-xs shrink-0">YP</div>
+          <div class="min-w-0"><div class="font-semibold text-ink text-sm truncate">Yoga P.</div><div class="text-amber-500 text-xs">★★★★★</div></div>
+        </div>
+        <p class="text-slate2 text-xs sm:text-sm">Cabang Racik Cah Solo 2 dekat kosan, order lewat WA fast response.</p>
+      </div>
+    </div>
+    <p class="text-slate2/50 text-[11px] mt-5 text-center">Komentar di atas contoh — ganti dengan ulasan asli pelangganmu.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="footer-info" class="bg-ink text-white/80 scroll-mt-14">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16 grid md:grid-cols-3 gap-8 md:gap-10">
+    <div>
+      <div class="flex items-center gap-2.5 mb-3">
+        <span class="w-12 h-12 rounded-full bg-[#FFF7EA] overflow-hidden flex items-center justify-center shrink-0">
+          <img src="/image/logo.jpeg" alt="Logo Agen HS" class="w-full h-full object-contain" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<span class=\'font-display font-bold text-base text-emerald-900\'>HS</span>')">
+        </span>
+        <span class="font-display font-bold text-white text-lg"> HS GROUP</span>
+      </div>
+      <p class="text-sm text-white/60 leading-relaxed mb-4">
+        Agen HS adalah usaha es kristal dan es teh kekinian yang berdiri sejak 2015 di Tasikmadu, Karanganyar.
+        Kini kami mengelola 4 cabang: 2 cabang es kristal higienis untuk kebutuhan warung, katering, dan hajatan,
+        serta 2 cabang es teh kekinian Racik Cah Solo dengan puluhan varian minuman. Semua cabang siap antar setiap hari.
+      </p>
+      <div class="flex gap-3">
+        <a href="https://wa.me/62895358240856" target="_blank" rel="noopener" aria-label="WhatsApp Cabang Pusat" class="w-9 h-9 rounded-full bg-white/10 hover:bg-orange flex items-center justify-center transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.42-1.35a9.87 9.87 0 004.62 1.15h.01c5.46 0 9.9-4.45 9.9-9.9C21.96 6.45 17.5 2 12.04 2zm5.71 14.16c-.24.68-1.4 1.3-1.93 1.35-.5.06-1.08.28-3.6-.75-3.03-1.25-4.98-4.32-5.13-4.52-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.2 1.05-2.5.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.66.5.24.6.82 2.06.9 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.38-.44.5-.15.15-.3.31-.13.6.17.3.77 1.27 1.66 2.06 1.14 1.02 2.1 1.34 2.4 1.5.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.34.08.13.08.72-.16 1.4z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-display font-semibold text-white mb-4">Kontak Cabang</h4>
+      <ul class="space-y-3 text-sm">
+        <li><div class="text-white">Es Kristal — Cabang Pusat</div><a class="text-white/50 hover:text-white" href="https://wa.me/62895358240856" target="_blank" rel="noopener">+62 895-3582-40856</a></li>
+        <li><div class="text-white">Es Kristal — Cabang 2 (Zoletho)</div></li>
+        <li><div class="text-white">Es Teh — Racik Cah Solo</div></li>
+        <li><div class="text-white">Es Teh — BC</div></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display font-semibold text-white mb-4">Lokasi Pusat</h4>
+      <div class="rounded-2xl overflow-hidden h-36 sm:h-40 mb-3">
+        <iframe class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.9322989512248!2d110.9336204!3d-7.582348599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a19003e34f845%3A0xdf53cbcf3537a6aa!2sAgen%20es%20kristal%20HS!5e0!3m2!1sid!2sid!4v1"
+          title="Peta lokasi pusat"></iframe>
+      </div>
+      <p class="text-sm text-white/60">RT.02/RW.02, Ngijo Tengah, Tasikmadu, Karanganyar, Jawa Tengah</p>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40">
+      <p>© 2026 Agen HS. Es Kristal &amp; Es Teh Terpercaya, 4 Cabang.</p>
+      <p>Dibuat untuk usaha lokal Tasikmadu, Karanganyar.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ===================== IMAGE HELPERS ===================== */
+function px(id, w) {
+  if (Array.isArray(id)) return id.map(item => px(item, w));
+  if (typeof id === 'string') {
+    if (id.startsWith('http')) return id;
+    if (id.startsWith('/image/')) return id;
+    return `/image/${id}`;
+  }
+  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w || 400}`;
+}
+
+/* Gambar fallback per kategori */
+const fallbackImages = {
+  'Es Kristal':     px(434259),
+  'Teh':            px(8619612),
+  'Kopi':           px(10738363),
+  'Matcha':         px(32972501),
+  'Sticky Milk':    px(10738363),
+  'Green Tea':      px(32972501),
+  'Sirup & Squash': px(1484678),
+};
+
+/* ===================== DATA: 4 branches ===================== */
+/* Format item: [nama, harga, namaFileGambar] */
+const branches = {
+  es1: {
+    label: 'Es Kristal — Cabang Pusat',
+    name: 'Cabang Pusat',
+    address: 'RT.02/RW.02, Ngijo Tengah, Tasikmadu, Karanganyar',
+    hours: 'Buka 06.00–20.00 WIB, setiap hari',
+    mapsQuery: 'Agen+es+kristal+HS+Ngijo+Tasikmadu+Karanganyar',
+    whatsapp: '62895358240856',
+    categories: {
+      'Es Kristal': [
+        ['Es Kristal Curah 1kg',  'Rp 3.000',  'es-batu.jpeg'],
+        ['Es Kristal Curah 5kg',  'Rp 5.000',  'es-batu.jpeg'],
+        ['Es Kristal Curah 10kg', 'Rp 10.000', 'es-batu.jpeg'],
+        ['Es Kristal Curah 20kg', 'Rp 20.000', 'es-batu.jpeg'],
+      ],
+      'Isi Ulang Galon': [
+        ['Isi Ulang Galon', 'Rp 5.000', 'Galon.jpg'],
+      ]
+      
+    }
+  },
+  es2: {
+    label: 'Es Kristal — Cabang 2 (Zoletho Omise)',
+    name: 'Cabang 2 — Zoletho Omise',
+    address: 'Karangmojo, Tasikmadu, Karanganyar, Jawa Tengah 57722',
+    hours: 'Buka 06.00–19.00 WIB, setiap hari',
+    mapsQuery: 'Zoletho+Omise+Karangmojo+Tasikmadu+Karanganyar',
+    whatsapp: '',
+    categories: {
+      'Es Kristal': [
+        ['Es Kristal Curah 1kg',  'Rp 3.000',  'es-batu.jpeg'],
+        ['Es Kristal Curah 5kg',  'Rp 5.000',  'es-batu.jpeg'],
+        ['Es Kristal Curah 10kg', 'Rp 10.000', 'es-batu.jpeg'],
+        ['Es Kristal Curah 20kg', 'Rp 20.000', 'es-batu.jpeg'],
+      ]
+    }
+  },
+  teh1: {
+    label: 'Es Teh — Racik Cah Solo',
+    name: 'Racik Cah Solo',
+    address: 'Tasikmadu, Karanganyar, Jawa Tengah',
+    hours: 'Buka 09.00–21.00 WIB, setiap hari',
+    mapsQuery: 'Racik+Cah+Solo+Tasikmadu+Karanganyar',
+    whatsapp: '',
+    categories: {
+      'Teh': [
+        ['Es teh',        'Rp 2.500', 'es teh.jpeg'],
+        ['Es teh kampul', 'Rp 3.500', 'es-kampul.jpeg'],
+        ['Es lemon tea',  'Rp 5.000', 'teh-lemon.jpeg'],
+        ['Thai tea',      'Rp 5.000', 'teh tarik.jpeg'],
+        ['Teh varian', 'Rp 4.000- 5.000', 'teh-varian.png'],
+      ],
+      'Green Tea': [
+        ['Green Tea Original',         'Rp 5.000', 'green-ori.jpeg'],
+        ['Green Tea Sirup',     'Rp 7.000', 'green-sirup.jpeg'],
+        ['Green Tea Latte',        'Rp 7.000', 'green-latte.jpeg'],
+        ['Varian Green Tea',    'Rp 8.000', 'green-varian.png'],
+      ],
+      'Es Sirup': [
+        ['Sirup Strawbbery', 'Rp 5.000 - 6.000', 'sirup.jpeg'],
+        ['Sirup Melon', 'Rp 5.000 - 6.000', 'melon.jpeg'],
+        ['Sirup Coco pandan', 'Rp 5.000 - 6.000', 'cocopadan.jpeg'],
+        ['Sirup varian', 'Rp 5.000 - 6.000', 'sirup-varian.png'],
+      ],
+      
+      'Kopi': [
+        ['Kopi susu',         'Rp 5.000', 'kopi-susu.jpeg'],
+        ['Vanila coffee',     'Rp 5.000', 'vanila-f.jpeg'],
+        ['Americano sunrise', 'Rp 7.000', 'kopi-americano.jpeg'],
+        ['Varian Kopi Lainya',    'Rp 5.000 - 8.000', 'Varian-kopi.png'],
+      ],
+      'Varian Rasa': [
+        ['Varian Taro', 'Rp 5.000 ', 'Taro.jpeg'],
+        ['Varian coklat', 'Rp 5.000 ', 'varian-coklat.jpeg'],
+        ['Varian Blueberry', 'Rp 5.000 ', 'Blubery.jpeg'],
+        ['Varian rasa Lainya', 'Rp 5.000 - 7.000', 'rasa-varian.png'],
+      ],
+      'Matcha': [
+        ['Matcha original',        'Rp 5.000', 'macha.jpeg'],
+        ['Matcha latte',           'Rp 7.000', 'matcha-latte.jpeg'],
+        ['Matcha taro latte',      'Rp 9.000', 'matcha-taro.jpeg'],
+        ['Varian Matcha Lainnya', 'Rp 5.000 - 9.000', 'Varian-matcha.png'],
+      ],
+      'SQUASH': [
+        ['Frambos squash', 'Rp 8.000', 'frambosh.jpeg'],
+        ['Melon squash',   'Rp 8.000', 'melon squash.jpeg'],
+        ['Cocopandan swush',    'Rp 8.000', 's.jpeg'],
+        ['Squash varian',  'Rp 8.000 - 10.000', 'Varian-s.png'],
+      ],
+      'Sticky Milk': [
+        ['Milo',   'Rp 8.000', 'milo.jpeg'],
+        ['Mangga', 'Rp 8.000', 'Mangga.jpeg'],
+        ['Cappuccino',   'Rp 8.000', 'cappucino.jpeg'],
+        ['Sticky Milk Varian Lainya', 'Rp 8.000', 'varisan milk.png'],
+      ],
+    }
+  },
+  teh2: {
+    label: 'Es Teh BC ',
+    name: 'Es Teh BC',
+    address: 'Perempatan sondokoro,Taksimadu, Karanganyar, Jawa Tengah',
+    hours: 'Buka 09.00–21.00 WIB, setiap hari',
+    mapsQuery: 'Perempatan+sondokoro',
+    whatsapp: '',
+    categories: {
+      'Teh': [
+        ['Es teh',            'Rp 2.500', 'es teh.jpeg'],
+        ['Es teh kampul', 'Rp 3.500', 'es-kampul.jpeg'],
+        ['Es Lemom tea',      'Rp 4.000', 'teh-jeruk.jpeg'],
+        ['Teh varian', 'Rp 4.000- 5.000', 'BC-VarianTeh.jpeg'],
+      ],
+      'Kopi': [
+        ['Aren coffee',         'Rp 5.000', 'aren.jpeg'],
+        ['Klepon coffee',     'Rp 5.000', 'klepon.jpeg'],
+        ['Americano coffee' , 'Rp 5.000', 'BC-ame.jpg'],
+        ['Varian Kopi Lainya',    'Rp 5.000 - 8.000', 'Bc-coffe.jpeg'],
+      ],
+      'Green Tea': [
+        ['Green Tea Original',         'Rp 5.000', 'green-ori.jpeg'],
+        ['Green Tea Sirup',     'Rp 7.000', 'green-sirup.jpeg'],
+        ['Green Tea Latte',        'Rp 7.000', 'green-latte.jpeg'],
+        ['Varian Green Tea Lainya',    'Rp 5.000 - 8.000', 'Bc-green.jpeg'],
+      ],
+      'Varian Rasa': [
+        ['Varian Taro', 'Rp 5.000 ', 'Taro.jpeg'],
+        ['Varian coklat', 'Rp 5.000 ', 'varian-coklat.jpeg'],
+        ['Varian Blueberry', 'Rp 5.000 ', 'Blubery.jpeg'],
+        ['Varian rasa Lainya', 'Rp 5.000 - 7.000', 'Bc-rasa.jpeg'],
+      ],
+      'Es Sirup': [
+        ['Sirup Strawbbery', 'Rp 5.000 - 6.000', 'sirup.jpeg'],
+        ['Sirup Melon', 'Rp 5.000 - 6.000', 'melon.jpeg'],
+        ['Sirup Coco pandan', 'Rp 5.000 - 6.000', 'cocopadan.jpeg'],
+        ['Sirup varian', 'Rp 5.000 - 6.000', 'Bc-sirup.jpeg'],
+      ],
+      'Matcha': [
+        ['Matcha original',        'Rp 5.000', 'macha.jpeg'],
+        ['Matcha coklat latte',           'Rp 7.000', 'Matchacoklat.jpeg'],
+        ['Matcha taro latte',      'Rp 9.000', 'matcha-taro.jpeg'],
+        ['Varian Matcha Lainnya', 'Rp 5.000 - 9.000', 'Bc-matcha.jpeg'],
+      ],
+      'Sticky Milk': [
+        ['Milo',   'Rp 8.000', 'milo.jpeg'],
+        ['Mangga', 'Rp 8.000', 'Mangga.jpeg'],
+        ['Cappuccino',   'Rp 8.000', 'cappucino.jpeg'],
+        ['Sticky Milk Varian Lainya', 'Rp 8.000', 'Bc-milk.jpeg'],
+      ],
+      'SQUASH': [
+        ['Frambos squash', 'Rp 8.000', 'frambosh.jpeg'],
+        ['Melon squash',   'Rp 8.000', 'melon squash.jpeg'],
+        ['Cocopandan swush',    'Rp 8.000', 's.jpeg'],
+        ['Squash varian',  'Rp 8.000 - 10.000', 'Bc-squash.jpeg'],
+      ],
+    }
+  }
+};
+
+/* ===================== GALLERY DATA ===================== */
+const gallery = [
+  ['Es Teh',        '/image/es teh.jpeg'],
+  ['Logo',            '/image/image.png'],
+  ['Es Teh BC',  '/image/BC.jpeg'],
+  ['Matcha Latte',    'matcha-latte.jpeg'],
+  ['Es Batu',    '/image/es-batu.jpeg'],
+  ['Racik Cah Solo',    '/image/cabang1.jpeg'],
+  ['Taro',     '/image/Taro.jpeg'],
+  ['Coklat',        '/image/coklat.jpeg'],
+  ['Es Teh Cabang 2', 'es teh.jpeg'],
+  ['Sirup',        'sirup.jpeg'],
+  ['Americano',       '/image/americano.jpeg'],
+  ['Tim Antar',       '/image/antar.png'],
+];
+
+const galeriGrid = document.getElementById('galeriGrid');
+galeriGrid.innerHTML = gallery.map(([label, url]) => `
+  <div class="aspect-square rounded-xl overflow-hidden photo-cover">
+    <img src="${px(url)}" alt="${label}" loading="lazy"
+         onerror="this.onerror=null;this.src='${px(434259)}'">
+    <span class="photo-label">${label}</span>
+  </div>
+`).join('');
+
+/* ===================== RENDER ===================== */
+const produkHeading = document.getElementById('produkHeading');
+const branchName    = document.getElementById('branchName');
+const branchAddress = document.getElementById('branchAddress');
+const branchHours   = document.getElementById('branchHours');
+const branchRoute   = document.getElementById('branchRoute');
+const branchContact = document.getElementById('branchContact');
+const catChipsWrap  = document.getElementById('catChipsWrap');
+const catChips      = document.getElementById('catChips');
+const menuGrid      = document.getElementById('menuGrid');
+
+function renderCategory(branchKey, catName) {
+  const b = branches[branchKey];
+  const items = b.categories[catName] || [];
+  const fallback = fallbackImages[catName] || px(434259);
+
+  if (!items.length) {
+    menuGrid.innerHTML = '<p class="col-span-full text-slate2 text-sm">Belum ada produk di kategori ini.</p>';
+    return;
+  }
+
+  menuGrid.innerHTML = items.map(([name, price, imgFile]) => {
+    const imgUrl = imgFile ? px(imgFile) : fallback;
+    return `
+      <div class="bg-white border border-line rounded-2xl overflow-hidden card-hover flex flex-col">
+        <div class="aspect-square photo-cover">
+          <img src="${imgUrl}" alt="${name}" loading="lazy"
+               onerror="this.onerror=null;this.src='${fallback}'">
+        </div>
+        <div class="p-2.5 sm:p-3.5 flex-1 flex flex-col">
+          <div class="text-ink text-xs sm:text-sm font-medium leading-snug line-clamp-2 mb-1.5">${name}</div>
+          <div class="flex items-center justify-between gap-1 mt-auto">
+            <span class="text-orange font-bold text-xs sm:text-sm">${price}</span>
+            ${b.whatsapp ? `<a href="https://wa.me/${b.whatsapp}?text=${encodeURIComponent('Halo Agen HS, saya mau pesan ' + name)}"
+               target="_blank" rel="noopener" aria-label="Pesan ${name} via WhatsApp"
+               class="w-7 h-7 rounded-full bg-orange hover:bg-orangeD flex items-center justify-center transition-colors shrink-0">
+              <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.42-1.35a9.87 9.87 0 004.62 1.15h.01c5.46 0 9.9-4.45 9.9-9.9C21.96 6.45 17.5 2 12.04 2zm5.71 14.16c-.24.68-1.4 1.3-1.93 1.35-.5.06-1.08.28-3.6-.75-3.03-1.25-4.98-4.32-5.13-4.52-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.2 1.05-2.5.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.66.5.24.6.82 2.06.9 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.38-.44.5-.15.15-.3.31-.13.6.17.3.77 1.27 1.66 2.06 1.14 1.02 2.1 1.34 2.4 1.5.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.34.08.13.08.72-.16 1.4z"/></svg>
+            </a>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectBranch(key) {
+  const b = branches[key];
+  document.querySelectorAll('.branch-tab').forEach(el => el.classList.toggle('active', el.dataset.branch === key));
+
+  produkHeading.textContent = 'Produk — ' + b.label;
+  branchName.textContent = b.name;
+  branchAddress.textContent = b.address;
+  branchHours.textContent = b.hours;
+  branchRoute.href = 'https://www.google.com/maps/search/?api=1&query=' + b.mapsQuery;
+  branchRoute.classList.toggle('hidden', key !== 'es1');
+  branchContact.classList.toggle('hidden', !b.whatsapp);
+  if (b.whatsapp) branchContact.href = 'https://wa.me/' + b.whatsapp;
+
+  const cats = Object.keys(b.categories);
+  if (cats.length > 1) {
+    catChipsWrap.classList.remove('hidden');
+    catChips.innerHTML = cats.map((c, i) => `
+      <button data-cat="${c}" class="cat-chip ${i===0?'active':''} whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold ${i===0?'':'bg-white text-ink border border-line'}">${c}</button>
+    `).join('');
+    catChips.querySelectorAll('.cat-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        catChips.querySelectorAll('.cat-chip').forEach(b2 => { b2.classList.remove('active'); b2.classList.add('bg-white','text-ink','border','border-line'); });
+        btn.classList.add('active'); btn.classList.remove('bg-white','border','border-line');
+        renderCategory(key, btn.dataset.cat);
+      });
+    });
+    renderCategory(key, cats[0]);
+  } else {
+    catChipsWrap.classList.add('hidden');
+    renderCategory(key, cats[0]);
+  }
+}
+
+document.querySelectorAll('.branch-tab').forEach(card => {
+  card.addEventListener('click', () => {
+    selectBranch(card.dataset.branch);
+    document.getElementById('produk').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+selectBranch('es1');
+
+/* ===================== UI CHROME (SIDEBAR) ===================== */
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+const sidebarClose = document.getElementById('sidebarClose');
+
+function openSidebar() {
+  overlay.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    overlay.classList.remove('opacity-0');
+    sidebar.classList.add('open');
+  });
+  menuBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  overlay.classList.add('opacity-0');
+  sidebar.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  setTimeout(() => overlay.classList.add('hidden'), 300);
+}
+
+menuBtn.addEventListener('click', openSidebar);
+sidebarClose.addEventListener('click', closeSidebar);
+overlay.addEventListener('click', closeSidebar);
+document.querySelectorAll('.sidebar-link').forEach(a => a.addEventListener('click', closeSidebar));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+window.addEventListener('resize', () => { if (window.innerWidth >= 768) closeSidebar(); });
+
+/* ===================== REVEAL ON SCROLL ===================== */
+const revealEls = document.querySelectorAll('[data-reveal]');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); io.unobserve(entry.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
